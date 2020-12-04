@@ -31,10 +31,16 @@ public class assignment_04 {
 //        passports.stream().filter(Passport::isValid).forEach(System.out::println);
         var resA = solveA();
         System.out.println("resA: " + resA);
+        var resB = solveB();
+        System.out.println("resB = " + resB);
     }
     
     private static long solveA() {
         return passports.stream().filter(Passport::isValidA).count();
+    }
+    
+    private static long solveB() {
+        return passports.stream().filter(Passport::isValidB).count();
     }
     
     private static void leesInvoer() throws IOException {
@@ -87,8 +93,15 @@ class Passport {
         if (msr.equals("in") && (l < 59 || l > 76)) return false;
         if (msr.equals("cm") && (l < 150 || l > 193)) return false;
         // hcl
-        String pattern = "#[0-9a-f]{6}";
+        var pattern = "#[0-9a-f]{6}";
         if (!(fields.get("hcl").matches(pattern))) return false;
+        // ecl
+        var set = Set.of("amb", "blu", "brn", "gry", "grn", "hzl", "oth");
+        if (!set.contains(fields.get("ecl"))) return false;
+        // pid
+        pattern = "[0-9]{9}";
+        if (!(fields.get("pid").matches(pattern))) return false;
+        return true;
     }
     
     @Override

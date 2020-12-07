@@ -91,7 +91,7 @@ public class assignment_07 {
 
     private static int solveA(String start) {
         var reversedMapA = mapA.entrySet().stream()
-            .flatMap(e -> e.getValue().stream().map((String s) -> Pair.<String, String>of(e.getKey(), s)))
+            .flatMap(e -> e.getValue().stream().map(s -> Pair.of(e.getKey(), s)))
             .collect(groupingBy(p -> p.b, mapping(p -> p.a, toList())))
         ;
         var seen = new HashSet<String>();

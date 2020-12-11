@@ -171,8 +171,8 @@ public class assignment_11 {
     }
     
     private static void print(char[][] x) {
-        for (int row = 0; row < x.length; row++) {
-            for (int col = 0; col < x[0].length; col++) System.out.print(x[row][col]);
+        for (var arr: x) {
+            for (char c: arr) System.out.print(c);
             System.out.println();
         }
         System.out.println("----------------------------");

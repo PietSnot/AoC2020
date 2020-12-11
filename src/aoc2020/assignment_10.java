@@ -37,7 +37,7 @@ public class assignment_10 {
         input = Files.lines(path).map(Long::valueOf).sorted().collect(toList());
         input.add(0, 0L);
         input.add(input.get(input.size() - 1) + 3);
-        System.out.println("inout has " + input.size() + " lines");
+        System.out.println("input has " + input.size() + " lines");
     }
     
     private static long solveA() {

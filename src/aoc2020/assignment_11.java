@@ -24,35 +24,27 @@ public class assignment_11 {
     static int rows, cols;
     
     public static void main(String... args) throws IOException {
-        var resA = solveA();
+        boolean isA = true;
+        var resA = solve(isA);
         System.out.println("resA = " + resA);
-        var resB = solveB(false);
+        var resB = solve(!isA);
         System.out.println("resB = " + resB);
     }
     
-    private static long solveA() throws IOException {
+    private static long solve(boolean isPartA) throws IOException {
         var path = Paths.get(AoC2020.INVOERMAP, "assignment_11.txt");
         readInput(path);
-        boolean changed = true;
-        while (changed) {
-            changed = nextGenerationA();
-        }
-        int lives = 0;
-        for (int row = 0; row < rows; row++) {
-            for (int col = 0; col < cols; col++) {
-                if (original[row][col] == '#') lives++;
-            }
-        }
-        return lives;
+        while (nextGeneration(isPartA));
+        return nrOfLives();
     }
     
-    private static boolean nextGenerationA() {
+    private static boolean nextGeneration(boolean A) {
         var changed = false;
         for (int row = 0; row < rows; row++) {
             for (int col = 0; col < cols; col++) {
                 copy[row][col] = original[row][col];
                 if (original[row][col] == '.') continue;
-                var points = getNeighborsA(row, col);
+                var points = A ? getNeighborsA(row, col) : getNeighborsB(row, col);
                 int count = 0;
                 for (var p: points) {
                     if (original[p.x][p.y] == '#') count++;
@@ -61,7 +53,7 @@ public class assignment_11 {
                     copy[row][col] = '#';
                     changed = true;
                 }
-                if (original[row][col] == '#' && count >= 4) {
+                if (original[row][col] == '#' && count >= (A ? 4 : 5)) {
                     copy[row][col] = 'L';
                     changed = true;
                 }       
@@ -71,50 +63,6 @@ public class assignment_11 {
         copy = original;
         original = temp;
         return changed;
-    }
-    
-     private static boolean nextGenerationB() {
-        var changed = false;
-        for (int row = 0; row < rows; row++) {
-            for (int col = 0; col < cols; col++) {
-                copy[row][col] = original[row][col];
-                if (original[row][col] == '.') continue;
-                var points = getNeighborsB(row, col);
-                int count = 0;
-                for (var p: points) {
-                    if (original[p.x][p.y] == '#') count++;
-                }
-                if (original[row][col] == 'L' && count == 0) {
-                    copy[row][col] = '#';
-                    changed = true;
-                }
-                if (original[row][col] == '#' && count >= 5) {
-                    copy[row][col] = 'L';
-                    changed = true;
-                }       
-            }
-        }
-        temp = copy;
-        copy = original;
-        original = temp;
-        return changed;
-    }
-
-    private static long solveB(boolean test) throws IOException {
-        var path = Paths.get(AoC2020.INVOERMAP, "assignment_11.txt");
-        readInput(path);
-        boolean changed = true;
-        while (changed) {
-            changed = nextGenerationB();
-            if (test) print(original);
-        }
-        int lives = 0;
-        for (int row = 0; row < rows; row++) {
-            for (int col = 0; col < cols; col++) {
-                if (original[row][col] == '#') lives++;
-            }
-        }
-        return lives;   
     }
     
     private static List<Point> getNeighborsA(int row, int col) {
@@ -170,11 +118,13 @@ public class assignment_11 {
         }
     }
     
-    private static void print(char[][] x) {
-        for (var arr: x) {
-            for (char c: arr) System.out.print(c);
-            System.out.println();
+    private static int nrOfLives() {
+        int count = 0;
+        for (int r = 0; r < rows; r++) {
+            for (int c = 0; c < cols; c++) {
+                if (original[r][c] == '#') count++;
+            }
         }
-        System.out.println("----------------------------");
+        return count;
     }
 }

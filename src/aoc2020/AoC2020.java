@@ -16,7 +16,7 @@ public class AoC2020 {
      * @param args the command line arguments
      */
     
-    public static final String INVOERMAP = "D:\\JavaProgs\\AoC2020\\src\\Resources";
+    static final String INVOERMAP = "D:\\JavaProgs\\AoC2020\\src\\Resources";
     
     public static void main(String[] args) {
         // TODO code application logic here

@@ -17,9 +17,4 @@ public class AoC2020 {
      */
     
     static final String INVOERMAP = "D:\\JavaProgs\\AoC2020\\src\\Resources";
-    
-    public static void main(String[] args) {
-        // TODO code application logic here
-    }
-
 }
